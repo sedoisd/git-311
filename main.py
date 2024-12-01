@@ -4,12 +4,13 @@ from PyQt6.QtGui import QPainter, QColor
 from PyQt6.QtWidgets import QMainWindow, QApplication
 from PyQt6 import uic
 from random import randint
+from ui_class import Ui_MainWindow
 
 
-class Example(QMainWindow):
+class Example(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('UI.ui', self)
+        self.setupUi(self)
         self.initUI()
         self.button_paint.clicked.connect(self.paint)
 
@@ -22,8 +23,9 @@ class Example(QMainWindow):
         if self.do_paint:
             qp = QPainter()
             qp.begin(self)
-            qp.setBrush(QColor('Yellow'))
-            x, y = randint(100, 700), randint(100, 700)
+            r, g, b = [randint(0, 255) for _ in range(3)]
+            qp.setBrush(QColor(r, g, b))
+            x, y = randint(50, 700), randint(100, 700)
             r = randint(10, 300)
             qp.drawEllipse(x, y, r, r)
             qp.end()
